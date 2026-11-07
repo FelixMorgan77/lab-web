@@ -17,6 +17,8 @@ permissions:
 jobs:
   build-site:
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_BUILD__POSIX_SPAWN: "--with-cflags=-Wno-error=incompatible-pointer-types"
 
     steps:
       - name: Checkout main branch contents
