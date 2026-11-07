@@ -17,18 +17,20 @@ permissions:
 jobs:
   build-site:
     runs-on: ubuntu-latest
-    env:
-      BUNDLE_BUILD__POSIX_SPAWN: "--with-cflags=-Wno-error=incompatible-pointer-types"
 
     steps:
       - name: Checkout main branch contents
         uses: actions/checkout@v7
 
-      - name: Install Ruby packages
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.1"
-          bundler-cache: true
+
+      - name: Install Ruby packages
+        run: |
+          bundle config set --local build.posix-spawn "--with-cflags=-Wno-error=incompatible-pointer-types"
+          bundle install
 
       - name: Get Pages URL
         id: pages
